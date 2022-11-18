@@ -36,7 +36,8 @@
         "k--kato.intellij-idea-keybindings",
         "codezombiech.gitignore",
         "usernamehw.errorlens",
-        "2gua.rainbow-brackets"
+        "2gua.rainbow-brackets",
+        "ms-vscode.makefile-tools"
       ]
     }
   },
