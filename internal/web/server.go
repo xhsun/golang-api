@@ -26,5 +26,6 @@ func NewServer(config config.Config, employeeHandler *EmployeeHandler) *Server {
 func (s *Server) Start() error {
 	router := gin.Default()
 	router.GET("/employees", s.employeeHandler.GetEmployees)
+	router.POST("/employee", s.employeeHandler.PostEmployee)
 	return router.Run()
 }

@@ -27,3 +27,11 @@ func (r *EmployeeRepository) GetEmployees(ctx context.Context) ([]core.Employee,
 	}
 	return r.mapper.ToDomains(e), nil
 }
+
+func (r *EmployeeRepository) AddEmployee(ctx context.Context, gender string) (int, error) {
+	e, err := r.client.Employees.Create().SetGender(gender).Save(ctx)
+	if err != nil {
+		return -1, fmt.Errorf("failed to add an employee: %w", err)
+	}
+	return e.ID, nil
+}
