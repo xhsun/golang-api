@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Employee - domain model for Employee
+// Employee - DTO model for Employee
 type Employee struct {
 	Gender string `json:"gender" binding:"required,alphanum"`
 }
