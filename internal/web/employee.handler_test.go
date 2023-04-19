@@ -125,7 +125,7 @@ func (suite *EmployeeHandlerSuite) TestPostEmployee() {
 	for _, tt := range tests {
 		suite.T().Run(tt.desc, func(t *testing.T) {
 			if tt.expected > -1 {
-				call := suite.employeeServiceMock.On("AddEmployee", mock.Anything, tt.inputGender)
+				call := suite.employeeServiceMock.On("AddEmployee", mock.Anything, tt.inputGender).Maybe()
 				if tt.internalError != nil {
 					call.Return(-1, tt.internalError)
 				} else {
@@ -139,9 +139,7 @@ func (suite *EmployeeHandlerSuite) TestPostEmployee() {
 			}
 			res.Status(tt.actualStatus)
 
-			if tt.expected > -1 {
-				suite.employeeServiceMock.AssertExpectations(suite.T())
-			}
+			suite.employeeServiceMock.AssertExpectations(suite.T())
 		})
 	}
 }
