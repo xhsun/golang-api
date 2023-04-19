@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"golang-api/internal/core"
-	"log"
 	"testing"
 
 	"github.com/go-faker/faker/v4"
@@ -27,8 +26,6 @@ type EmployeeServiceSuite struct {
 func (suite *EmployeeServiceSuite) SetupTest() {
 	suite.employeeRepositoryMock = core.NewMockIEmployeeRepository(suite.T())
 	suite.target = core.NewEmployeeService(suite.employeeRepositoryMock)
-	log.Println("setup")
-	// fmt.Println()
 }
 
 func (suite *EmployeeServiceSuite) TestRetrieveAllEmployees() {
