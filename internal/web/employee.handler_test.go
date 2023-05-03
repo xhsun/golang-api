@@ -68,7 +68,8 @@ func (suite *EmployeeHandlerSuite) TestGetEmployees() {
 
 	for _, tt := range tests {
 		suite.T().Run(tt.desc, func(t *testing.T) {
-			call := suite.employeeServiceMock.On("RetrieveAllEmployees", mock.Anything).Once()
+			// Instead of using `On("RetrieveAllEmployees", mock.Anything)`, use helper function created by mockery
+			call := suite.employeeServiceMock.EXPECT().RetrieveAllEmployees(mock.Anything).Once()
 			if tt.isError != nil {
 				call.Return(nil, tt.isError)
 			} else {
