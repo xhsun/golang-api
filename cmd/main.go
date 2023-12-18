@@ -5,32 +5,35 @@ import (
 	"golang-api/ent"
 	"golang-api/internal/config"
 	"golang-api/internal/registry"
-	"log"
 
 	"github.com/ilyakaznacheev/cleanenv"
+	"go.uber.org/zap"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
+	logger, _ := zap.NewProduction()
+	defer logger.Sync() // flushes buffer, if any
+
 	var c config.Config
 	cleanenv.ReadEnv(&c)
 
 	client, err := ent.Open(config.DatastoreType, c.Datastore.File)
 	if err != nil {
-		log.Fatalf("failed opening connection to sqlite: %v", err)
+		logger.Fatal("failed opening connection to sqlite", zap.Error(err))
 	}
 	defer client.Close()
 	if err := client.Schema.Create(context.Background()); err != nil {
-		log.Fatalf("failed creating schema resources: %v", err)
+		logger.Fatal("failed creating schema resources", zap.Error(err))
 	}
 
-	server, err := registry.InitializeServer(c, client)
+	server, err := registry.InitializeServer(c, client, logger)
 	if err != nil {
-		log.Fatalf("failed initialize server: %v", err)
+		logger.Fatal("failed initialize server", zap.Error(err))
 	}
 	err = server.Start()
 	if err != nil {
-		log.Fatalf("failed to run server: %v", err)
+		logger.Fatal("failed to run server", zap.Error(err))
 	}
 }

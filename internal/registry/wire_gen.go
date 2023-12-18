@@ -7,6 +7,7 @@
 package registry
 
 import (
+	"go.uber.org/zap"
 	"golang-api/ent"
 	"golang-api/internal/config"
 	"golang-api/internal/core"
@@ -17,11 +18,12 @@ import (
 // Injectors from wire.go:
 
 // InitializeServer - initialize the server
-func InitializeServer(config2 config.Config, client *ent.Client) (*web.Server, error) {
+func InitializeServer(config2 config.Config, client *ent.Client, logger *zap.Logger) (*web.Server, error) {
 	employeeMapper := infra.NewEmployeeMapper()
 	employeeRepository := infra.NewEmployeeRepository(client, employeeMapper)
 	employeeService := core.NewEmployeeService(employeeRepository)
 	employeeHandler := web.NewEmployeeHandler(employeeService)
-	server := web.NewServer(config2, employeeHandler)
+	healthCheckHandler := web.NewHealthCheckHandler()
+	server := web.NewServer(logger, config2, employeeHandler, healthCheckHandler)
 	return server, nil
 }

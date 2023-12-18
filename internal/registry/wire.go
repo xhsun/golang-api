@@ -11,15 +11,17 @@ import (
 	"golang-api/internal/web"
 
 	"github.com/google/wire"
+	"go.uber.org/zap"
 )
 
 // InitializeServer - initialize the server
-func InitializeServer(config config.Config, client *ent.Client) (*web.Server, error) {
+func InitializeServer(config config.Config, client *ent.Client, logger *zap.Logger) (*web.Server, error) {
 	wire.Build(
 		infra.NewEmployeeMapper,
 		infra.NewEmployeeRepository, wire.Bind(new(core.IEmployeeRepository), new(*infra.EmployeeRepository)),
 		core.NewEmployeeService, wire.Bind(new(core.IEmployeeService), new(*core.EmployeeService)),
 		web.NewEmployeeHandler,
+		web.NewHealthCheckHandler,
 		web.NewServer,
 	)
 	return &web.Server{}, nil

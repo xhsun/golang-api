@@ -1,0 +1,9 @@
+version: v1
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT # https://buf.build/docs/lint/rules#basic
+deps:
+  - buf.build/bufbuild/protovalidate

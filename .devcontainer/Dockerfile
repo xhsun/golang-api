@@ -9,8 +9,8 @@ ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
 # [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends protobuf-compiler libprotobuf-dev
 
 # [Optional] Uncomment the next lines to use go get to install anything else you need
 USER vscode
@@ -18,6 +18,9 @@ RUN go env -w GOPROXY=https://proxy.golang.org,direct
 RUN go install github.com/google/wire/cmd/wire@latest
 RUN go install github.com/vektra/mockery/v2@latest
 RUN go install entgo.io/ent/cmd/ent@latest
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+RUN go install github.com/bufbuild/buf/cmd/buf@v1.17.0
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1

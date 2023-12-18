@@ -23,7 +23,15 @@ func NewEmployeeRepository(client *ent.Client, mapper *EmployeeMapper) *Employee
 func (r *EmployeeRepository) GetEmployees(ctx context.Context) ([]core.Employee, error) {
 	e, err := r.client.Employees.Query().All(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed querying employees: %w", err)
+		return nil, fmt.Errorf("query employees: %w", err)
 	}
 	return r.mapper.ToDomains(e), nil
+}
+
+func (r *EmployeeRepository) AddEmployee(ctx context.Context, gender string) (int, error) {
+	e, err := r.client.Employees.Create().SetGender(gender).Save(ctx)
+	if err != nil {
+		return -1, fmt.Errorf("create employees: %w", err)
+	}
+	return e.ID, nil
 }
