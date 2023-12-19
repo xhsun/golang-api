@@ -8,6 +8,7 @@ while true; do
         [Yy]* ) 
         brew install protobuf
         go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
         break;;
         [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
