@@ -57,7 +57,9 @@ func (s *Server) Start() error {
 		))
 
 	// Register server handlers
-	// TODO: Add employee handler
+	// TODO: Register employee handler
+	panic("Register employee handler")
+
 	grpc_health_v1.RegisterHealthServer(grpcServer, s.healthCheckHandler)
 
 	// Listen to port

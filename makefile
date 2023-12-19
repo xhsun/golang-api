@@ -11,6 +11,14 @@ build: ## Builds a static executable
 run: ## Run server
 	@echo "+ $@"
 	$(GO) run cmd/main.go
+	
+get-all: ## Run client to get all employees
+	@echo "+ $@"
+	$(GO) run client.go 
+
+add: ## Run client to add new employee
+	@echo "+ $@"
+	$(GO) run client.go -add -g $(gender)
 
 clean: ## Cleanup any build binaries, packages or artifacts
 	@echo "+ $@"

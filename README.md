@@ -51,10 +51,13 @@ Create two unary RPC methods to get all employees and create a new employee. You
   - Refer to [basic guide](https://grpc.io/docs/languages/go/basics/#starting-the-server) to see how to register server code.
   - Feel free to take a look at how `internal/web/healthCheck.handler.go` is registered as an example.
   - If you are ready, take a look at [gRPC interceptors](https://github.com/grpc-ecosystem/go-grpc-middleware) to add additional interceptors (equivalent of HTTP middlewares) to your server.
+  
+Then update `client.go` to call the two unary RPC methods:
+- Refer to [basic guide](https://grpc.io/docs/languages/go/basics/#client) to learn how to setup a client and call a server method
 
 ## Run The Project
 
-Once you have installed the necessary dependencies by following the [prerequisites](#prerequisites), go to the project root and run:
+To run the server, go to the project root and run:
 
 ```
 make run
@@ -65,6 +68,16 @@ or
 ```
 make build
 ./server
+```
+
+To run the client, , go to the project root and run:
+
+```
+// To get all employees
+make get-all
+
+// To add a new employee
+make add gender=<GENDER>
 ```
 
 *Note: By default, server will run on port `5051` unless a `PORT` environment variable was defined*
